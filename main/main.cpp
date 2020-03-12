@@ -4,14 +4,14 @@
 #include <string>
 
 
-static int operation(int a, int b, std::string compo)
+static int operation(int a, int b, std::string composant)
 {
         int (*func)(int,int);
         int t = 0;
         void *handle;
         
         // Ouverture de la librairie
-        if(compo.compare("Composant2")==0)
+        if(composant.compare("Composant2")==0)
                 handle = dlopen("./libComposant2.so", RTLD_LAZY);
         else
                 handle = dlopen("./libComposant1.so", RTLD_LAZY);
@@ -22,7 +22,7 @@ static int operation(int a, int b, std::string compo)
         }
 
         // Chargement de la fonction "func"
-        if(compo.compare("Composant2") == 0)
+        if(composant.compare("Composant2") == 0)
         {
                 *(void **) (&func) = dlsym(handle, "composant2");
                 if (func == NULL)
@@ -47,7 +47,7 @@ static int operation(int a, int b, std::string compo)
 
                 // Exécution de la fonction "func"
                 t = func(a,b);  
-                std::cout << std::endl << " value return " << t << std::endl;
+                std::cout << std::endl << " Valeur de retour :  " << t << std::endl;
         }
         // Fermeture de la librairie
         dlclose(handle);
@@ -67,16 +67,9 @@ int main(int argc, char ** argv)
         if(argc == 4)
         {
 		std::string arg1(argv[1]);
-                if(arg1.compare("Composant1") == 0)
-                {
-                        valeur = operation(data1, data2, arg1);
-                }
-                else if(arg1.compare("Composant2") == 0)
-                {
-                        valeur = operation(data1, data2, arg1);
-                }
+                valeur = operation(data1, data2, arg1);
         }
 
         std::cout << std::endl;
-	std::cout << "valeur :" << valeur << std::endl;
+	std::cout << "Valeur :" << valeur << std::endl;
 }
