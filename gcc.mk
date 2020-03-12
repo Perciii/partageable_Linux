@@ -3,7 +3,7 @@
 	gcc -fPIC ${CFLAGS} -c $< -o $@
 
 %.o : %.cpp
-	g++ -fPIC ${CPPFLAGS} -c $< -o $@
+	g++ -fPIC -c ${CPPFLAGS} -c $< -o $@
 
 ${EXE} : ${OBJS}
 	g++ ${OBJS} ${LDFLAGS} -o $@
